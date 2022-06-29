@@ -54,15 +54,13 @@ class InfoProvider {
     var url = '$API/delete/$infoName';
 
     Uri uri = Uri.parse(url);
+    var createInfo = CreateInfo();
+    var body = createInfo.toDeleteJson(infoName);
 
-    //var body = createProjectDto.toJson();
-
-    var response = await http.delete(
-      uri, /*headers: {
+    var response = await http.delete(uri, body: json.encode(body), headers: {
       "Content-Type": "application/json",
       "Accept": "application/json"
-    }*/
-    );
+    });
 
     if (response.statusCode == 200) {
       return true;
@@ -76,7 +74,7 @@ class InfoProvider {
 
     Uri uri = Uri.parse(url);
 
-    var body = createInfo.toJson();
+    var body = createInfo.toUpdateJson();
 
     var response = await http.put(uri, body: json.encode(body), headers: {
       "Content-Type": "application/json",
